@@ -1,6 +1,8 @@
 <?php
 
-$QnA = array(
+//CSS Used: txtLeft,aboutTxt,aboutRed,aboutGrey
+
+$QnA=array(
 	"May I use resource's found on this site?",
 	"Of course, I would have not put them up for download if that was not the intention.",
 	"May I edit resource's found on this site?",
@@ -21,22 +23,13 @@ $QnA = array(
 	"Nope."
 	);
 
-echo '<table class="newsblockheader" align="center">'
-		. '<tr>'
-			. '<td class="newsheader" style="font-size:16px;">'
-				. 'Frequently Asked Questions, Created: January 2016, Updated: Not Yet'
-			. '</td>'
-		. '</tr>'
-	. '</table>'
-	. '<table class="newsblockbody" align="center">'
-		. '<tr>'
-			. '<td class="newsbody" style="text-align: left; font-size:14px;">';
+echo $blockTopBar . 'Frequently Asked Questions, Created: January 2016, Updated: Not Yet' . $blockBody . '<br><div class="txtLeft">';
 
 for($x=0;$x!=count($QnA);++$x){
-	echo '<div class="linktab"><font color="red">Question:</font> ' . $QnA[$x++] . '<br>'
-		. '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#8597BC">Answer:</font> ' . $QnA[$x] . '</div><br>';
+	echo '<div class="aboutTxt"><span class="aboutRed">Question:</span> ' . $QnA[$x++] . '<br>'
+		. '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="aboutGrey">Answer:</span> ' . $QnA[$x] . '</div><br>';
 }
 
-echo '</td></tr></table>';
+echo '</div>' . $blockEnd;
 
 ?>

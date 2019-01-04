@@ -1,5 +1,10 @@
 <?php
-require('grave_screen.php');
+
+require_once('grave_blockBuilder.php');
+require_once('dataArray/grave_screenArray.php');
+
+$numberOfImageInArray=3;
+$numberTotal=$numberOfImageInArray*2+1;
 
 if(empty($_GET["number"])){
 	$startNum = 0;
@@ -8,7 +13,7 @@ if(empty($_GET["number"])){
 }
 
 $numberOfImages=count($imageName)-1;
-$imageNumber=$startNum-2;
+$imageNumber=$startNum-$numberOfImageInArray;
 
 if($imageNumber > $numberOfImages){
 	$imageNumber = 0;
@@ -28,43 +33,33 @@ if($rightArrowNumber > $numberOfImages){
 	$rightArrowNumber = 0;
 }
 
-echo '<table width=100% style="font-size:10px;"><tr><td align="center">'
-	.'<a href="screen/' . $imageName[$startNum][0] . '" target="_blank">'
-		.'<img src="screen/' . $imageName[$startNum][0] . '" style="max-width:700px;max-height:700px;">'
-	.'</a><br>'
-	.'<font size="3">' . $imageName[$startNum][1] . '</font><br>'
-	.'(Click image above for full size)'
-	.'</td></tr></table>';
+echo $blockTopBar . 'Image Gallery' . $blockBody . '<br><br>'
+	. '<table><tr><td>'
+		. '<a href="screen/' . $imageName[$startNum][0] . '" target="_blank"><img class="galyImgMax" src="screen/' . $imageName[$startNum][0] . '"></a><br>'
+		. $imageName[$startNum][1] . '<br>(Click image above for full size)'
+	. '</td></tr></table>'
+	. '<table class="smallTable"><tr><td><form action="index.php" method="get">'
+	. '<input name="number" id="number" type="hidden" value="' . $leftArrowNumber . '"><input name="page" id="page" type="hidden" value="SCREEN">'
+	. '<button class="galyArrow" type="submit" value="Submit">&lArr;</button></form></td><br><br><br><br><br><br>';
 
-echo '<table style="max-width:800px;max-height:800px;" align="center"><tr><td style="background-color: #545454;">'
-	.'<form  action="index.php" method="get">'
-		.'<input name="number" id="number" type="hidden" value="' . $leftArrowNumber . '">'
-		.'<input name="page" id="page" type="hidden" value="SCREEN">'
-		.'<button type="submit" value="Submit" style="height:100px;padding:0px;border:0px;background-color: #545454;font-size:25px;">'
-			.'&lArr;'
-		.'</button></form></td>';
-
-for($x=0;$x!=5;++$x){
+for($x=0;$x<$numberTotal;++$x){
 	echo '<td><form  action="index.php" method="get">'
-			.'<input name="number" id="number" type="hidden" value="' . $imageNumber . '">'
-			.'<input name="page" id="page" type="hidden" value="SCREEN">'
-			.'<button type="submit" value="Submit" style="max-width:125px;max-height:125px;padding:0px;border:0px;background-color: #292929;">'
-				.'<img src="screen/mini/' . $imageName[$imageNumber][0] . '" style="max-width:125px;max-height:125px;">'
-			.'</button>'
-		.'</form></td>';
+			. '<input name="number" id="number" type="hidden" value="' . $imageNumber . '">'
+			. '<input name="page" id="page" type="hidden" value="SCREEN">'
+			. '<button class="galyImgAry" type="submit" value="Submit">'
+				.'<img class="galyImgAry" src="screen/mini/' . $imageName[$imageNumber][0] . '">'
+			. '</button>'
+		. '</form></td>';
 
-	$imageNumber=$imageNumber + 1;
+	++$imageNumber;
 
 	if($imageNumber > $numberOfImages){
 		$imageNumber = 0;
 	}
 }
 
-echo '<td style="background-color: #545454;">'
-		.'<form  action="index.php" method="get">'
-		.'<input name="number" id="number" type="hidden" value="' . $rightArrowNumber . '">'
-		.'<input name="page" id="page" type="hidden" value="SCREEN">'
-		.'<button type="submit" value="Submit" style="height:100px;padding:0px;border:0px;background-color: #545454;font-size:25px;">'
-			.'&rArr;'
-		.'</button></form></td></tr></table>';
+echo '<td><form  action="index.php" method="get"><input name="number" id="number" type="hidden" value="' . $rightArrowNumber . '">'
+	. '<input name="page" id="page" type="hidden" value="SCREEN"><button class="galyArrow" type="submit" value="Submit">&rArr;</button>'
+	. '</form></td></tr></table><br><br><br><br>' . $blockEnd . '<br><br>';
+
 ?>
